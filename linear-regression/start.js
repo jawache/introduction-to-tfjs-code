@@ -13,7 +13,8 @@ let C = 1;
 const getY = x => A * x + C;
 
 
-// Create tensor variables to store the weights of `A` and `C`
+// Create tensor variables to store the weights of `A` and `C` 
+// TODO: Replace A and C with Math.random() when running properly
 const a = tf.variable(tf.scalar(A));
 const c = tf.variable(tf.scalar(C));
 
@@ -25,37 +26,18 @@ const optimizer = tf.train.sgd(learningRate);
 
 function predict(x) {
   // y = m * x + b
-  return a.mul(x).add(c);
+  // TODO
 }
 
 function loss(predictedYs, actualYs) {
   // Mean Squared Error
-  let x = predictedYs
-    .sub(actualYs)
-    .square()
-    .mean();
-
-  LOSS = x.dataSync()[0];
-
-  return x;
+  // TODO
 }
 
 async function train() {
   if (Xs.length) {
     for (CURRENT_EPOCH = 0; CURRENT_EPOCH < MAX_EPOCHS; CURRENT_EPOCH++) {
-      tf.tidy(() => {
-        const actualXs = tf.tensor(Xs, [Xs.length, 1]);
-        const actualYs = tf.tensor(Ys, [Ys.length, 1]);
-
-        optimizer.minimize(() => {
-          let predictedYs = predict(actualXs);
-          return loss(predictedYs, actualYs);
-        });
-
-        A = a.dataSync()[0];
-        C = c.dataSync()[0];
-      });
-      await tf.nextFrame();
+      // TODO
     }
   }
 }
