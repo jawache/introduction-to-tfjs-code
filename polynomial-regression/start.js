@@ -51,8 +51,8 @@ async function train() {
       });
 
       A = a.dataSync()[0];
+      B = b.dataSync()[0];
       // TODO: Maybe we need to extract the value from another tf.variable here?
-      C = c.dataSync()[0];
     });
     await tf.nextFrame();
   }
