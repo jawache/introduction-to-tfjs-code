@@ -18,15 +18,16 @@ const MAX_EPOCHS = 300;
 let Xs = [];
 let Ys = []
 
-// The equation of a curve
+// Coefficients needed to define a curve => Y = A*X^2 + B*X + C
 let A = Math.random();
-// TODO: Maybe we need to store another coefficient here?
+let B = Math.random();
 let C = Math.random();
 
 // Create tensor variables to store the weights of A, B and C
 const a = tf.variable(tf.scalar(A));
+const b = tf.variable(tf.scalar(B));
 //TODO: Maybe another TensorFlow variable here?
-const c = tf.variable(tf.scalar(C));
+
 
 // Setup the optimizer
 const learningRate = 0.5;
