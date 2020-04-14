@@ -1,3 +1,6 @@
+// The equation of a line
+const getY = x => A * x + C;
+
 // This scales a value from 0 to max to 0 to 1
 const norm = (x, max) => map(x, 0, max, 0, 1);
 const normX = x => norm(x, windowWidth);

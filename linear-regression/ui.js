@@ -8,6 +8,8 @@ const denorm = (x, max) => map(x, 0, 1, 0, max);
 const denormX = x => denorm(x, windowWidth);
 const denormY = x => denorm(1 - x, windowHeight); // 1- so 0 is at the top of the screen and 1 is at the bottom
 
+const getY = x => A * x + C;
+
 function mouseClicked() {
     console.log("Clicked", `${mouseX}, ${mouseY}`);
     let x = normX(mouseX);

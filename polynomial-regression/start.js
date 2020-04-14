@@ -19,60 +19,40 @@ let Xs = [];
 let Ys = []
 
 // The equation of a curve
-let A = -0.4;
+let A = Math.random();
 // TODO: Maybe we need to store another coefficient here?
-let C = 0.5;
-const getY = x => A * x + C; // TODO: Hmm is this the equation of a curve?
+let C = Math.random();
 
 // Create tensor variables to store the weights of A, B and C
-const a = tf.variable(tf.scalar(Math.random()));
-//TODO: Maybe another tensorflow variable here?
-const c = tf.variable(tf.scalar(Math.random()));
+const a = tf.variable(tf.scalar(A));
+//TODO: Maybe another TensorFlow variable here?
+const c = tf.variable(tf.scalar(C));
 
-// Setup the optimiser
+// Setup the optimizer
 const learningRate = 0.5;
-
-// Crete an optimiser, this will be used to change the weights (m and c) to minimise the loss function
 const optimizer = tf.train.sgd(learningRate);
 
-// Is passed in an array of X values and returns an array of predicted Y values based on the current values of a, b and c weights
-function predict(x) {
-  // TODO: This might need changing to be a polynomial equation, HINT - x.square() squares x
-  return a.mul(x).add(c);
-}
+async function train() {
+  for (CURRENT_EPOCH = 0; CURRENT_EPOCH < numIterations; CURRENT_EPOCH++) {
+    tf.tidy(() => {
+      const actualXs = tf.tensor(Xs, [Xs.length, 1]);
+      const actualYs = tf.tensor(Ys, [Ys.length, 1]);
 
-// When passed in the array of predictedYs calculates the mean square loss compared to the actualYs
-function loss(predictedYs, actualYs) {
-  // Mean Squared Error
-  let x = predictedYs
-    .sub(actualYs)
-    .square()
-    .mean();
-  LOSS = x.dataSync()[0];
-  return x;
-}
+      optimizer.minimize(() => {
+        const predictedYs = a.mul(actualXs).add(c); // TODO: Maybe this needs to be turned into the equation of a curve
+        let loss = predictedYs
+          .sub(actualYs)
+          .square()
+          .mean();
 
-// Pass in the actualXs and the actualYs (from the mouse clicks)
-// use the actualXs to calculate the prdictedYs
-// pass predictedYs and actualYs to the optimiser and try to minimise that value
-async function train(numIterations = 1) {
-  if (Xs.length) {
-    for (CURRENT_EPOCH = 0; CURRENT_EPOCH < numIterations; CURRENT_EPOCH++) {
-      tf.tidy(() => {
-        const actualXs = tf.tensor(Xs, [Xs.length, 1]);
-        const actualYs = tf.tensor(Ys, [Ys.length, 1]);
-
-        optimizer.minimize(() => {
-          let predictedYs = predict(actualXs);
-          return loss(predictedYs, actualYs);
-        });
-
-        A = a.dataSync()[0];
-        // TODO: Maybe we need to extract the value from another tf.variable here?
-        C = c.dataSync()[0];
-        // console.log(A, B, C);
+        LOSS = loss.dataSync()[0];
+        return loss;
       });
-      await tf.nextFrame();
-    }
+
+      A = a.dataSync()[0];
+      // TODO: Maybe we need to extract the value from another tf.variable here?
+      C = c.dataSync()[0];
+    });
+    await tf.nextFrame();
   }
 }

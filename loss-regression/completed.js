@@ -1,46 +1,27 @@
-/** GLOBAL SETTINGS **/
-var LOSS = 0;
+// Store the loss in this variable and it will be printed on the screen.
+let LOSS = 0;
 
-// This will store mouse x,y points
+// Every-time you click on the screen the mouse x,y points will be stored in here.
 let Xs = [];
 let Ys = [];
 
 // The equation of a line
 let A = -0.3;
 let C = 0.5;
-const getY = x => A * x + C;
 
-
-// Manual Loss Function
-function manual_loss() {
-  let mean = 0;
-  const size = Xs.length;
-  for (let i = 0; i < size; i++) {
-    const x = Xs[i];
-    const y = Ys[i];
-    const predictedY = getY(x);
-    mean = mean + Math.pow(y - predictedY, 2);
-  }
-  LOSS = mean / size;
-}
-
-// TensorFlow Loss Function
-function tf_loss() {
-  const actualXs = tf.tensor(Xs, [Xs.length, 1]);
-  const actualYs = tf.tensor(Ys, [Ys.length, 1]);
+async function train() {
+  const actualXs = tf.tensor(Xs);
+  const actualYs = tf.tensor(Ys);
 
   const a = tf.scalar(A);
   const c = tf.scalar(C);
+
   predictedYs = a.mul(actualXs).add(c);
 
-  let x = predictedYs
+  let loss = predictedYs
     .sub(actualYs)
     .square()
     .mean();
 
-  LOSS = x.dataSync()[0];
-}
-
-async function train() {
-  manual_loss()
+  LOSS = loss.dataSync()[0];
 }

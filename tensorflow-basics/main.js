@@ -22,7 +22,10 @@ a.print();
 // a.print();
 
 // Errors out - shape is wrong
-var a = tf.tensor([[1, 2], [3]]);
+var a = tf.tensor([
+  [1, 2],
+  [3]
+]);
 console.log(a.rank);
 console.log(a.shape);
 a.print();
@@ -126,9 +129,6 @@ a.div(b).print();
 
 var a = tf.tensor3d([4, 5, 6], [3, 1, 1]);
 
-
-
-
 {
   var a = tf.tensor3d([4, 5, 6], [3, 1, 1]);
   var b = tf.tensor3d([2, 2, 2], [3, 1, 1]);
@@ -173,22 +173,26 @@ a.mul(b).print();
 var a = tf.tensor1d([5, 10, 3, 12]);
 var b = tf.tensor1d([3, 3, 2, 11]);
 
-
-
-
-
-
-
 // One solution is to take one away from the other and then get the average like so:
-a.sub(b).mean().print()
+a.sub(b)
+  .mean()
+  .print();
 
 // But order shouldn't matter, a - b or b - a they are still just as different, but it does!
-b.sub(a).mean().print()
+b.sub(a)
+  .mean()
+  .print();
 
 // The problem is that mean only really works in this case if all the distances are positive, if some are negative then they cancel each other out which we don't want.
-a.sub(b).print()
-b.sub(a).print()
+a.sub(b).print();
+b.sub(a).print();
 
 // One common solution is to use mean squared error
-a.sub(b).square().mean().print()
-b.sub(a).square().mean().print()
+a.sub(b)
+  .square()
+  .mean()
+  .print();
+b.sub(a)
+  .square()
+  .mean()
+  .print();
