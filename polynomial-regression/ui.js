@@ -17,7 +17,7 @@ function mouseClicked() {
   Xs.push(x);
   Ys.push(y);
   // Everytime we click a mouse we run for this many epochs
-  train(MAX_EPOCHS);
+  train();
 }
 
 function setup() {
