@@ -27,7 +27,6 @@ function setupButton(id) {
         // Stop grabbing samples of images
         clearTimeout(timerId);
     });
-
 }
 
 setupButton("sample-1")
@@ -41,7 +40,7 @@ async function run() {
 
     let output = document.getElementById("output-result")
 
-    setInterval(async () => {
+    setInterval(async function predict() {
         // TODO
     }, 100)
 }

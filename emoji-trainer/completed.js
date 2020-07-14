@@ -19,7 +19,8 @@ function setupButton(id) {
             // Start grabbing an image of the video
             const image = await CAMERA.capture();
             // Pump it through mobilenet and get the logits
-            const logits = MBNET.infer(image, "conv_preds");
+            const logits = MBNET.infer(image, true);
+            console.log(logits.shape);
             // Add this as a bit of data for knn
             KNN.addExample(logits, text);
 
@@ -52,7 +53,7 @@ async function run() {
 
     let output = document.getElementById("output-result")
 
-    setInterval(async () => {
+    setInterval(async function predict() {
         // Add this as a bit of data for knn
         const numClasses = KNN.getNumClasses();
         if (numClasses > 0) {
