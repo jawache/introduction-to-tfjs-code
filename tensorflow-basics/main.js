@@ -2,7 +2,7 @@
  * Let's cover the basics of tensors and the maths you can do on them
  */
 
-// MATRICES ---------------------------------------------------------
+// CREATING & PRINTING  ---------------------------------------------------------
 
 var a = tf.tensor([1, 2, 3]);
 console.log(a.rank);
@@ -14,6 +14,11 @@ var a = tf.tensor1d([1, 2, 3]);
 console.log(a.rank);
 console.log(a.shape);
 a.print();
+
+// You can grab the data inside the Tensor by using the `dataSync` function.
+var data = a.dataSync();
+console.log(data);
+
 
 // Also using types catches errors
 // var a = tf.tensor1d([[1, 2, 3]]);
@@ -41,45 +46,6 @@ a.print();
 
 // Or you can provide a flat array and define a shape
 var a = tf.tensor([1, 2, 3, 4], [2, 2]);
-console.log(a.rank);
-console.log(a.shape);
-a.print();
-
-// QUIZ - Make a rank 1 tensor of 4,5,6, then a rank 2 tensor of [4],[5],[6], then a rank 3 tensor of [[4]],[[5]],[[6]]
-
-// ANS: Rank 1
-var a = tf.tensor([4, 5, 6]);
-var a = tf.tensor1d([4, 5, 6]);
-var a = tf.tensor([4, 5, 6], [3]);
-var a = tf.tensor([4, 5, 6], [3]);
-console.log(a.rank);
-console.log(a.shape);
-a.print();
-
-// ANS: Rank 2
-var a = tf.tensor2d([
-  [4],
-  [5],
-  [6]
-]);
-var a = tf.tensor2d([4, 5, 6], [3, 1]);
-console.log(a.rank);
-console.log(a.shape);
-a.print();
-
-// ANS: Rank 3
-var a = tf.tensor3d([
-  [
-    [4]
-  ],
-  [
-    [5]
-  ],
-  [
-    [6]
-  ]
-]);
-var a = tf.tensor3d([4, 5, 6], [3, 1, 1]);
 console.log(a.rank);
 console.log(a.shape);
 a.print();
