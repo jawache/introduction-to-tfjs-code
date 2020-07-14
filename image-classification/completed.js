@@ -18,6 +18,7 @@ async function startCamera() {
         // Get the raw inferred model data and print out
         const logits = await model.infer(image);
         logits.print();
+        logits.softmax().print();
     }, 1000);
 }
 
